@@ -1,4 +1,5 @@
-
+#   git config --global user.email "steven@gmail.com"
+#  git config --global user.name "Pearcee"
 
 comment = date +"%y.%m.%d.%T"
 git status
