@@ -36,6 +36,11 @@ h1 {
   color: black;
   margin-bottom: 0.5rem;
 }
+
+h2 {
+  color: black;
+  margin-bottom: 0.5rem;
+}
 .container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));

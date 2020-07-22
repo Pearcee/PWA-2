@@ -9,33 +9,6 @@ function myFunction() {
   }
 }
 
-function loadJSON(callback) {
-        var xobj = new XMLHttpRequest();
-        xobj.overrideMimeType("application/json");
-
-        xobj.onreadystatechange = function () {
-                if (xobj.readyState == 4 && xobj.status == "200") {
-                    // Required use of an anonymous callback as .open will NOT return 
-                    // a value but simply returns undefined in asynchronous mode
-                    callback(xobj.responseText);
-                } else {
-                    callback("[{\"Nothing\"}]");
-                }
-            };
-
-        xobj.open('GET', 'Persons.json', true);
-        // Maybe you require use of an unknown origin.
-        /*xobj.setRequestHeader("Access-Control-Allow-Origin","*");*/
-        xobj.send(null);  
-    };
-
-loadJSON(function(response) {
-        // Parse JSON string into object
-        //document.getElementById("demo").innerHTML = JSON.parse(response);
-        // Parse JSON array string into object
-        document.getElementById("demo").innerHTML = JSON.stringify(response);
-    });
-
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
@@ -45,3 +18,38 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.log("service worker not registered", err));
   });
 }
+
+$(document).ready(function(){
+  $('#load_data').ready(function(){
+   $.ajax({
+    url:"employee.csv",
+    dataType:"text",
+    success:function(data)
+    {
+     var employee_data = data.split(/\r?\n|\r/);
+     var table_data = '<table class="table table-bordered table-striped">';
+     for(var count = 0; count<employee_data.length; count++)
+     {
+      var cell_data = employee_data[count].split(",");
+      table_data += '<tr>';
+      for(var cell_count=0; cell_count<cell_data.length; cell_count++)
+      {
+       if(count === 0)
+       {
+        table_data += '<th>'+cell_data[cell_count]+'</th>';
+       }
+       else
+       {
+        table_data += '<td>'+cell_data[cell_count]+'</td>';
+       }
+      }
+      table_data += '</tr>';
+     }
+     table_data += '</table>';
+     $('#employee_table').html(table_data);
+    }
+   });
+  });
+  
+ });
+ 
